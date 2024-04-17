@@ -17,16 +17,16 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
-    const tl = gsap.timeline();
-    tl.to(".wrapper", {
-        duration: 0.5,
-        opacity: 0,
-        onComplete: () => {
-            next();
-        }
-    });
-});
+// router.beforeEach((to, from, next) => {
+//     const tl = gsap.timeline();
+//     tl.to(".wrapper", {
+//         duration: 0.5,
+//         opacity: 0,
+//         onComplete: () => {
+//             next();
+//         }
+//     });
+// });
 
 const app = createApp({
     setup() {
