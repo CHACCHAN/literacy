@@ -1,5 +1,5 @@
-const { createApp, ref } = Vue;
-const { createRouter, createWebHashHistory } = VueRouter;
+const { createApp, onMounted, onUpdated, watch, ref } = Vue;
+const { createRouter, createWebHashHistory, useRouter } = VueRouter;
 
 const routes = [
     {
@@ -30,6 +30,18 @@ const router = createRouter({
 
 const app = createApp({
     setup() {
+        const pageName = ref(null);
+        watch(() => router.currentRoute.value.path, () => {
+
+        });
+
+        onMounted(() => {
+            document.title = pageName.value;
+        });
+
+        setTimeout(() => {
+            pageName.value = 'test';
+        }, 200);
 
         return {
             data: 'test'
