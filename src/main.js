@@ -4,13 +4,11 @@ const { createRouter, createWebHashHistory } = VueRouter;
 const routes = [
     {
         path: '/',
-        name: 'home',
         component: home
     },
     {
-        path: '/a',
-        name: 'homew',
-        component: { template: 'aaa'}
+        path: '/about',
+        component: about
     },
 ];
 
@@ -19,8 +17,20 @@ const router = createRouter({
     routes
 });
 
+router.beforeEach((to, from, next) => {
+    const tl = gsap.timeline();
+    tl.to(".wrapper", {
+        duration: 0.5,
+        opacity: 0,
+        onComplete: () => {
+            next();
+        }
+    });
+});
+
 const app = createApp({
     setup() {
+
         return {
             data: 'test'
         }
