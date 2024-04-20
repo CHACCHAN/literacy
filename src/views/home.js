@@ -1,0 +1,6 @@
+const home = {
+    template:
+    `
+        まだなにもないよ
+    `
+}
