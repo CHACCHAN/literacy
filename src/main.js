@@ -1,6 +1,6 @@
 import { myAnimations } from './gsap/animate.js';
 
-const { createApp, ref, watch, onMounted, onUpdated } = Vue;
+const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 
 export const fetchTemplate = async (pathName) => {
