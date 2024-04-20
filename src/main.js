@@ -1,22 +1,22 @@
 const { createApp, ref } = Vue;
-const { createRouter, createWebHashHistory } = VueRouter;
-
-const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: home
-    },
-    {
-        path: '/a',
-        name: 'homew',
-        component: { template: 'aaa'}
-    },
-];
+const { createRouter, createWebHistory } = VueRouter;
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes
+    history: createWebHistory('/literacy/'),
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: {
+                template: 'a22aa'
+            }
+        },
+        {
+            path: '/a',
+            name: 'homew',
+            component: { template: 'aaa'}
+        },
+    ]
 });
 
 const app = createApp({
