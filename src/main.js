@@ -3,6 +3,10 @@ import { myAnimations } from './gsap/animate.js';
 const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 
+gsap.config({
+    nullTargetWarn: false
+});
+
 export const fetchTemplate = async (pathName) => {
     const response = await fetch(location.origin + location.pathname + 'src/' + pathName);
     return await response.text();
@@ -72,6 +76,10 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp({
     setup() {
+        const headerRouteFlag = ref([
+            true, false, false,
+        ]);
+
         onMounted(() => {
             getRouting();
         });
@@ -89,8 +97,19 @@ const app = createApp({
             }
         }
 
+        const headerRouteFlagChanger = (id) => {
+            for(let i = 0; i < headerRouteFlag.value.length; i++) {
+                if(i === id) {
+                    headerRouteFlag.value[i] = true;
+                } else {
+                    headerRouteFlag.value[i] = false;
+                }
+            }
+        }
+
         return {
-            data: 'test',
+            headerRouteFlag,
+            headerRouteFlagChanger
         }
     }
 });

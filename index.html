@@ -34,13 +34,13 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
+                                <router-link :to="{ name: 'home' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[0] }" @click="headerRouteFlagChanger(0)">Home</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link :to="{ name: 'about' }" class="nav-link">About</router-link>
+                                <router-link :to="{ name: 'about' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[1] }" @click="headerRouteFlagChanger(1)">About</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link :to="{ name: 'photo' }" class="nav-link">Photo</router-link>
+                                <router-link :to="{ name: 'photo' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[2] }" @click="headerRouteFlagChanger(2)">Photo</router-link>
                             </li>
                             <!-- モバイル -->
                             <li class="nav-item d-block d-md-none border-top">
