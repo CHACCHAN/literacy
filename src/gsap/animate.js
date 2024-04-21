@@ -6,7 +6,7 @@ export const myAnimations = {
                 rotate: -30,
                 scale: 0,
             });
-        }, 30);
+        }, 10);
     },
     about: () => {
         setTimeout(() => {
@@ -39,6 +39,6 @@ export const myAnimations = {
                 ease: 'none',
                 stagger: .5,
             });
-        }, 30);
+        }, 10);
     }
 }

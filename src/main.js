@@ -4,7 +4,7 @@ const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 
 export const fetchTemplate = async (pathName) => {
-    const response = await fetch(location.origin + location.pathname + 'src/views/' + pathName);
+    const response = await fetch(location.origin + location.pathname + 'src/' + pathName);
     return await response.text();
 }
 
@@ -34,13 +34,13 @@ const router = createRouter({
             path: '/',
             name: 'home',
             call: 'ホーム',
-            component: { template: await fetchTemplate('home.html') }
+            component: { template: await fetchTemplate('views/home.html') }
         },
         {
             path: '/about',
             name: 'about',
             call: '私について',
-            component: { template: await fetchTemplate('about.html') }
+            component: { template: await fetchTemplate('views/about.html') }
         },
         {
             path: '/photo',
@@ -90,7 +90,7 @@ const app = createApp({
         }
 
         return {
-            data: 'test'
+            data: 'test',
         }
     }
 });
