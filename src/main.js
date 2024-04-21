@@ -2,6 +2,7 @@ import { myAnimations } from './gsap/animate.js';
 
 const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
+const isProgressBar = ref(false);
 
 gsap.config({
     nullTargetWarn: false
@@ -63,10 +64,12 @@ router.beforeEach((to, from, next) => {
         onStart: () => {
             document.getElementById('progressBar').innerHTML = '<div id="container" class="position-fixed w-100" style="height: 5px;top: -11px;"></div>';
             progressBar();
+            isProgressBar.value = false;
         },
         onComplete: () => {
             next();
             document.getElementById('container').remove();
+            isProgressBar.value = true;
         }
     }).to(".wrapper", {
         duration: 0.5,
@@ -109,7 +112,8 @@ const app = createApp({
 
         return {
             headerRouteFlag,
-            headerRouteFlagChanger
+            headerRouteFlagChanger,
+            isProgressBar
         }
     }
 });
