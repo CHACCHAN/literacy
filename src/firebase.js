@@ -2,12 +2,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDpEN9czLrXdURlxdcrpikZFYawLGV1fYM",
-  authDomain: "cit-github-page.firebaseapp.com",
-  projectId: "cit-github-page",
-  storageBucket: "cit-github-page.appspot.com",
-  messagingSenderId: "364095826489",
-  appId: "1:364095826489:web:b20b75b553d1753e94bbe8"
+    apiKey: "AIzaSyDpEN9czLrXdURlxdcrpikZFYawLGV1fYM",
+    authDomain: "cit-github-page.firebaseapp.com",
+    projectId: "cit-github-page",
+    storageBucket: "cit-github-page.appspot.com",
+    messagingSenderId: "364095826489",
+    appId: "1:364095826489:web:b20b75b553d1753e94bbe8"
 };
 
 const firebase = initializeApp(firebaseConfig);
