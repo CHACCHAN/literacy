@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>読み込み中</title>
     <link rel="icon" href="./src/assets/favicons/favicon.ico" id="favicon">
     <link rel="apple-touch-icon" sizes="180x180" href="./src/assets/favicons/apple-touch-icon-180x180.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -19,7 +19,7 @@
         })(window.location);
     </script>
 </head>
-<body class="wrapper">
+<body class="wrapper bg-dark text-light">
     <div id="app">
         <header>
             <nav class="navbar navbar-expand-lg bg-dark shadow-lg" data-bs-theme="dark">
@@ -34,13 +34,13 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <router-link :to="{ name: 'home' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[0] }" @click="headerRouteFlagChanger(0)">Home</router-link>
+                                <router-link :to="{ name: 'home' }" id="home" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[0] }" @click="headerRouteFlagChanger(0)">Home</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link :to="{ name: 'about' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[1] }" @click="headerRouteFlagChanger(1)">About</router-link>
+                                <router-link :to="{ name: 'about' }" id="about" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[1] }" @click="headerRouteFlagChanger(1)">About</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link :to="{ name: 'photo' }" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[2] }" @click="headerRouteFlagChanger(2)">Photo</router-link>
+                                <router-link :to="{ name: 'photo' }" id="photo" class="nav-link fw-bold" :class="{ 'text-primary': headerRouteFlag[2] }" @click="headerRouteFlagChanger(2)">Photo</router-link>
                             </li>
                             <!-- モバイル -->
                             <li class="nav-item d-block d-md-none border-top">
@@ -72,7 +72,7 @@
         <footer>
         </footer>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -84,5 +84,6 @@
     <script src="./src/views/home.js"></script>
     <script src="./src/views/about.js"></script>
     <script src="./src/gsap/animate.js"></script>
+    <script type="module" src="./src/firebase.js"></script>
 </body>
 </html>

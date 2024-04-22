@@ -1,10 +1,18 @@
 export const myAnimations = {
     home: () => {
         setTimeout(() => {
-            gsap.from('#rotateIcon2', {
+            gsap.from('#titleIn', {
                 duration: 1,
-                rotate: -30,
-                scale: 0,
+                y: 30,
+                opacity: 0,
+                ease: 'none',
+                stagger: .5,
+            });
+
+            gsap.from('#buttonScaleIn', {
+                duration: 1,
+                scale: 1.2,
+                ease: 'none',
             });
         }, 10);
     },

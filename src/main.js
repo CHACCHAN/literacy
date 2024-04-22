@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
     const tl = gsap.timeline();
     tl.to('.wrapper', {
         duration: 1.4,
-        opacity: 0.8,
+        opacity: 0.5,
         onStart: () => {
             document.getElementById('progressBar').innerHTML = '<div id="container" class="position-fixed w-100" style="height: 5px;top: -11px;"></div>';
             progressBar();
@@ -85,6 +85,10 @@ const app = createApp({
 
         onMounted(() => {
             getRouting();
+            // 初回アニメーションコールバック
+            setTimeout(() => {
+                runAnimation();
+            }, 1400);
         });
 
         watch(() => router.currentRoute.value.path, () => {
@@ -92,12 +96,16 @@ const app = createApp({
         });
 
         const getRouting = () => {
-            Object.values(myAnimations).forEach(fn => fn());
+            runAnimation();
             for(let i = 0; i < router.options.routes.length; i++) {
                 if(router.options.routes[i].path == location.pathname.replace('/literacy', '')) {
                     document.title = router.options.routes[i].call;
                 }
             }
+        }
+
+        const runAnimation = () => {
+            Object.values(myAnimations).forEach(fn => fn());
         }
 
         const headerRouteFlagChanger = (id) => {
