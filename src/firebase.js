@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+const { initializeApp } = 'https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js';
+const { getAuth, signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider, signOut, onAuthStateChanged } = 'https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDpEN9czLrXdURlxdcrpikZFYawLGV1fYM",
@@ -12,22 +12,16 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 
-const googleLogin = async() => {
-    await google.addScope('https://www.googleapis.com/auth/contacts.readonly');
-}
+// Google
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+const auth = getAuth();
 
-const emailLogin = async(email, password) => {
-    try {
-        await signInWithEmailAndPassword(email, password);
-    } catch(error) {
+// Login
+function login() {
+    signInWithPopup(auth, provider).then((result) => {
+        console.log(result);
+    }).catch((error) => {
         console.log(error);
-    }    
-}
-
-const logout = async() => {
-    try {
-        await signOut(auth);
-    } catch(error) {
-        console.log(error);
-    }
+    });
 }

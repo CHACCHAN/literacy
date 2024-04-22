@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
         duration: 1.4,
         opacity: 0.5,
         onStart: () => {
-            document.getElementById('progressBar').innerHTML = '<div id="container" class="position-fixed w-100" style="height: 5px;top: -11px;"></div>';
+            document.getElementById('progressBar').innerHTML = '<div id="container" class="position-fixed z-3 w-100" style="height: 5px;top: -11px;"></div>';
             progressBar();
             isProgressBar.value = false;
         },
@@ -121,7 +121,7 @@ const app = createApp({
         return {
             headerRouteFlag,
             headerRouteFlagChanger,
-            isProgressBar
+            isProgressBar,
         }
     }
 });
