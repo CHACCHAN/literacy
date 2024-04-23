@@ -1,8 +1,13 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js';
+import { getAuth, signOut, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
 import { myAnimations } from './gsap/animate.js';
 
 const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 const isProgressBar = ref(false);
+const isUserData = ref(null);
 
 gsap.config({
     nullTargetWarn: false
@@ -11,6 +16,35 @@ gsap.config({
 export const fetchTemplate = async (pathName) => {
     const response = await fetch(location.origin + location.pathname + 'src/' + pathName);
     return await response.text();
+}
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDpEN9czLrXdURlxdcrpikZFYawLGV1fYM",
+    authDomain: "cit-github-page.firebaseapp.com",
+    projectId: "cit-github-page",
+    storageBucket: "cit-github-page.appspot.com",
+    messagingSenderId: "364095826489",
+    appId: "1:364095826489:web:b20b75b553d1753e94bbe8"
+};
+
+const firebase = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+const auth = getAuth();
+
+const login = async () => {
+    var response;
+    await signInWithPopup(auth, provider).then((result) => {
+        response = result;
+    }).catch((error) => {
+        response = error;
+    });
+
+    isUserData.value = response;
+}
+
+const logout = async () => {
+    signOut(auth);
 }
 
 const progressBar = () => {
@@ -89,6 +123,9 @@ const app = createApp({
             setTimeout(() => {
                 runAnimation();
             }, 1400);
+
+            // login();
+            // logout();
         });
 
         watch(() => router.currentRoute.value.path, () => {
