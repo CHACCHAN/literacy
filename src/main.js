@@ -123,9 +123,6 @@ const app = createApp({
             setTimeout(() => {
                 runAnimation();
             }, 1400);
-
-            // login();
-            // logout();
         });
 
         watch(() => router.currentRoute.value.path, () => {
