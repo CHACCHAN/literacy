@@ -1,4 +1,4 @@
-export default myAnimations = {
+export const myAnimations = {
     home: () => {
         setTimeout(() => {
             gsap.from('#titleIn', {
