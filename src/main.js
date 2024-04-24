@@ -47,8 +47,11 @@ const login = async () => {
 }
 
 const logout = async () => {
-    await signOut(auth);
-    isUserData.value = null;
+    await signOut(auth).then(() => setTimeout(() => {
+        window.location.reload();
+        isUserData.value = null;
+    }, 100))
+    .catch((error) => console.log(error));
 }
 
 const progressBar = () => {
@@ -122,13 +125,12 @@ const app = createApp({
         ]);
 
         onMounted(() => {
+            getUser();
             getRouting();
             // 初回アニメーションコールバック
             setTimeout(() => {
                 runAnimation();
             }, 1400);
-
-            getUser();
         });
 
         watch(() => router.currentRoute.value.path, () => getRouting());
