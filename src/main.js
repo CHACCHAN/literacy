@@ -40,11 +40,12 @@ const login = async () => {
         response = error;
     });
 
+    console.log(response);
     isUserData.value = response;
 }
 
 const logout = async () => {
-    signOut(auth);
+    return signOut(auth);
 }
 
 const progressBar = () => {
