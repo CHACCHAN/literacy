@@ -41,9 +41,7 @@ const getUser = async () => {
 const login = async () => {
     await signInWithPopup(auth, provider).then((result) => {
         getUser();
-    }).catch((error) => {
-        isUserData.value = null;
-    });
+    }).catch((error) => isUserData.value = null);
 }
 
 const logout = async () => {
