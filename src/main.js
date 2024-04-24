@@ -131,16 +131,13 @@ const app = createApp({
             getUser();
         });
 
-        watch(() => router.currentRoute.value.path, () => {
-            getRouting();
-        });
+        watch(() => router.currentRoute.value.path, () => getRouting());
 
         const getRouting = () => {
             runAnimation();
             for(let i = 0; i < router.options.routes.length; i++) {
-                if(router.options.routes[i].path == location.pathname.replace('/literacy', '')) {
+                if(router.options.routes[i].path == location.pathname.replace('/literacy', ''))
                     document.title = router.options.routes[i].call;
-                }
             }
         }
 
@@ -150,11 +147,10 @@ const app = createApp({
 
         const headerRouteFlagChanger = (id) => {
             for(let i = 0; i < headerRouteFlag.value.length; i++) {
-                if(i === id) {
+                if(i === id) 
                     headerRouteFlag.value[i] = true;
-                } else {
+                else
                     headerRouteFlag.value[i] = false;
-                }
             }
         }
 
