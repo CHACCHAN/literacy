@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js';
-import { getAuth, signOut, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
 import { myAnimations } from './gsap/animate.js';
 
@@ -32,20 +32,23 @@ const provider = new GoogleAuthProvider();
 provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 const auth = getAuth();
 
-const login = async () => {
-    var response;
-    await signInWithPopup(auth, provider).then((result) => {
-        response = result;
-    }).catch((error) => {
-        response = error;
+const getUser = async () => {
+    await onAuthStateChanged(auth, (user) => {
+        if(user) isUserData.value = user;
     });
+}
 
-    console.log(response);
-    isUserData.value = response;
+const login = async () => {
+    await signInWithPopup(auth, provider).then((result) => {
+        getUser();
+    }).catch((error) => {
+        isUserData.value = null;
+    });
 }
 
 const logout = async () => {
-    return signOut(auth);
+    await signOut(auth);
+    isUserData.value = null;
 }
 
 const progressBar = () => {
@@ -124,6 +127,8 @@ const app = createApp({
             setTimeout(() => {
                 runAnimation();
             }, 1400);
+
+            getUser();
         });
 
         watch(() => router.currentRoute.value.path, () => {
@@ -157,6 +162,9 @@ const app = createApp({
             headerRouteFlag,
             headerRouteFlagChanger,
             isProgressBar,
+            isUserData,
+            login,
+            logout,
         }
     }
 });
