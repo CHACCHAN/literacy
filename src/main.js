@@ -89,6 +89,7 @@ const app = createApp({
 
         onMounted(() => {
             firstProcess();
+            redirect();
         });
 
         watch(() => router.currentRoute.value.path, () => getRouting());
@@ -97,6 +98,11 @@ const app = createApp({
             userSet();
             getRouting();
             setTimeout(() => runAnimation(), 1400);
+        }
+
+        const redirect = () => {
+            if(location.hash) 
+                setTimeout(() => document.getElementById(location.hash.replace('#', '')).click(), 1450);
         }
 
         const getRouting = () => {
