@@ -1,55 +1,16 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
-import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js';
-import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
-import { myAnimations } from './gsap/animate.js';
+import myAnimations from './gsap/animate.js';
+import firebase from './firebase.js';
 
 const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 const isProgressBar = ref(false);
-const isUserData = ref(null);
+const setCurrentUser = ref(null);
 
-gsap.config({
-    nullTargetWarn: false
-});
+const fb = new firebase();
 
-export const fetchTemplate = async (pathName) => {
+const fetchTemplate = async (pathName) => {
     const response = await fetch(location.origin + location.pathname + 'src/' + pathName);
     return await response.text();
-}
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDpEN9czLrXdURlxdcrpikZFYawLGV1fYM",
-    authDomain: "cit-github-page.firebaseapp.com",
-    projectId: "cit-github-page",
-    storageBucket: "cit-github-page.appspot.com",
-    messagingSenderId: "364095826489",
-    appId: "1:364095826489:web:b20b75b553d1753e94bbe8"
-};
-
-const firebase = initializeApp(firebaseConfig);
-const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-const auth = getAuth();
-
-const getUser = async () => {
-    await onAuthStateChanged(auth, (user) => {
-        if(user) isUserData.value = user;
-    });
-}
-
-const login = async () => {
-    await signInWithPopup(auth, provider).then((result) => {
-        getUser();
-    }).catch((error) => isUserData.value = null);
-}
-
-const logout = async () => {
-    await signOut(auth).then(() => setTimeout(() => {
-        window.location.reload();
-        isUserData.value = null;
-    }, 100))
-    .catch((error) => console.log(error));
 }
 
 const progressBar = () => {
@@ -87,6 +48,12 @@ const router = createRouter({
             component: { template: await fetchTemplate('views/about.html') }
         },
         {
+            path: '/chat',
+            name: 'chat',
+            call: 'チャット',
+            component: { template: await fetchTemplate('views/chat.html') }
+        },
+        {
             path: '/photo',
             name: 'photo',
             call: '写真',
@@ -106,9 +73,9 @@ router.beforeEach((to, from, next) => {
             isProgressBar.value = false;
         },
         onComplete: () => {
-            next();
             document.getElementById('container').remove();
             isProgressBar.value = true;
+            next();
         }
     }).to(".wrapper", {
         duration: 0.5,
@@ -118,20 +85,19 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp({
     setup() {
-        const headerRouteFlag = ref([
-            true, false, false,
-        ]);
+        const headerRouteFlag = ref([true, false, false]);
 
         onMounted(() => {
-            getUser();
-            getRouting();
-            // 初回アニメーションコールバック
-            setTimeout(() => {
-                runAnimation();
-            }, 1400);
+            firstProcess();
         });
 
         watch(() => router.currentRoute.value.path, () => getRouting());
+
+        const firstProcess = () => {
+            userSet();
+            getRouting();
+            setTimeout(() => runAnimation(), 1400);
+        }
 
         const getRouting = () => {
             runAnimation();
@@ -142,7 +108,8 @@ const app = createApp({
         }
 
         const runAnimation = () => {
-            Object.values(myAnimations).forEach(fn => fn());
+            const animations = myAnimations();
+            Object.values(animations).forEach(fn => fn());
         }
 
         const headerRouteFlagChanger = (id) => {
@@ -154,13 +121,15 @@ const app = createApp({
             }
         }
 
+        const userSet = () => fb.getUser().then((res) => setCurrentUser.value = res);
+
         return {
             headerRouteFlag,
             headerRouteFlagChanger,
             isProgressBar,
-            isUserData,
-            login,
-            logout,
+            setCurrentUser,
+            login: () => fb.login().then((res) => setCurrentUser.value = res),
+            logout: () => fb.logout(),
         }
     }
 });
