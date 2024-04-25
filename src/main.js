@@ -101,7 +101,7 @@ const app = createApp({
         }
 
         const redirect = () => {
-            if(location.hash)
+            if(location.hash) 
                 document.title = 'リダイレクト中';
                 setTimeout(() => document.getElementById(location.hash.replace('#', '')).click(), 1450);
         }
