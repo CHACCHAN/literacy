@@ -85,7 +85,7 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp({
     setup() {
-        const headerRouteFlag = ref([true, false, false]);
+        const headerRouteFlag = ref([true, false, false, false]);
 
         onMounted(() => {
             firstProcess();
