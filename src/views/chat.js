@@ -34,15 +34,15 @@ window.db_store_newThread = (e, title, detail, error) => {
             title: titleElm.value,
             detail: detailElm.value,
         })
-        .then((result) => roadButton(buttonElm, buttonElmContent, false))
+        .then((result) => loadButton(buttonElm, buttonElmContent, false))
         .catch((error) => {
             alert(error);
-            roadButton(buttonElm, buttonElmContent, false);
+            loadButton(buttonElm, buttonElmContent, false);
         });
     }
 }
 
-function roadButton(elm, defaultElm, flag) {
+function loadButton(elm, defaultElm, flag) {
     if(flag) {
         elm.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>   処理中';
         elm.disabled = true;
