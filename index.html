@@ -88,6 +88,46 @@
         <main class="container my-1">
             <router-view />
         </main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="card card-body bg-dark border-light">
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill" viewBox="0 0 16 16">
+                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                            <div class="ms-1 fw-bold">スレッド作成</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newThreadTitle" class="form-label m-0">タイトルを入力してください</label>
+                            <input type="text" id="newThreadTitle" class="form-control text-bg-dark border-secondary" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="newThreadDetail" class="form-label m-0">説明を入力してください</label>
+                            <textarea id="newThreadDetail" class="form-control text-bg-dark border-secondary" style="height: 43px; resize: none;" oninput="inputTextArea(event)"></textarea>
+                            <div id="newThreadError" class="text-danger d-none">*タイトルと説明は必須です</div>
+                        </div>
+                        <div class="mb-1">
+                            <div class="text-end">
+                                <button 
+                                    class="btn btn-primary rounded-pill" 
+                                    onclick="db_store_newThread(event, 'newThreadTitle', 'newThreadDetail', 'newThreadError')"
+                                    >作る
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div id="chatList">
+
+                    </div>
+                    <div id="chatView">
+
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Footer Content -->
         <footer>
