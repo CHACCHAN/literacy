@@ -26,7 +26,7 @@ class firebase {
                 else
                     reject(false);
             });
-        })
+        });
     }
 
     async login() {

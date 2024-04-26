@@ -5,6 +5,7 @@ const { createApp, ref, watch, onMounted } = Vue;
 const { createRouter, createWebHistory } = VueRouter;
 const isProgressBar = ref(false);
 const setCurrentUser = ref(null);
+const AppSetupReturns = ref(null);
 
 const fb = new firebase();
 
@@ -101,9 +102,10 @@ const app = createApp({
         }
 
         const redirect = () => {
-            if(location.hash) 
+            if(location.hash) {
                 document.title = 'リダイレクト中';
                 setTimeout(() => document.getElementById(location.hash.replace('#', '')).click(), 1450);
+            }
         }
 
         const getRouting = () => {
@@ -130,7 +132,7 @@ const app = createApp({
 
         const userSet = () => fb.getUser().then((res) => setCurrentUser.value = res);
 
-        return {
+        AppSetupReturns.value = {
             headerRouteFlag,
             headerRouteFlagChanger,
             isProgressBar,
@@ -138,8 +140,12 @@ const app = createApp({
             login: () => fb.login().then((res) => setCurrentUser.value = res),
             logout: () => fb.logout(),
         }
+
+        return AppSetupReturns.value;
     }
 });
 
 app.use(router);
 app.mount('#app');
+
+export default AppSetupReturns.value;
