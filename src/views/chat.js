@@ -3,18 +3,14 @@ import AppSetupReturns from "../main.js";
 
 const fb = new firebase();
 
-// document.getElementById('chatList').addEventListener('load', () => {
-//     console.log('run');
-    
-// });
-
-setTimeout(() => {
-    fb.db_realtime_thread_lists({
-        path: 'threads/',
-        parentID: 'chatList',
-    });
-}, 1400);
-
+document.getElementById('chat').addEventListener('click', () => {
+    setTimeout(() => {
+        fb.db_realtime_thread_lists({
+            path: 'threads/',
+            parentID: 'chatList',
+        });
+    }, 1400);
+});
 
 window.inputTextArea = (e) => {
     const PADDING_Y = 20;
