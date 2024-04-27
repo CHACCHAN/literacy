@@ -1,10 +1,20 @@
 import firebase from "../firebase.js";
+import AppSetupReturns from "../main.js";
 
 const fb = new firebase();
 
-window.clickEvent = () => {
+// document.getElementById('chatList').addEventListener('load', () => {
+//     console.log('run');
+    
+// });
 
-}
+setTimeout(() => {
+    fb.db_realtime_thread_lists({
+        path: 'threads/',
+        parentID: 'chatList',
+    });
+}, 1400);
+
 
 window.inputTextArea = (e) => {
     const PADDING_Y = 20;
@@ -17,6 +27,7 @@ window.inputTextArea = (e) => {
     textarea.style.height = lineHeight * lines + PADDING_Y + 'px';
 }
 
+// スレッドを新規作成
 window.db_store_newThread = (e, title, detail, error) => {
     const titleElm = document.getElementById(title);
     const detailElm = document.getElementById(detail);
@@ -29,17 +40,68 @@ window.db_store_newThread = (e, title, detail, error) => {
         errorElm.classList.add('d-none');
 
         const buttonElmContent = buttonElm.innerHTML;
-        roadButton(buttonElm, buttonElmContent, true);
+        loadButton(buttonElm, buttonElmContent, true);
         fb.db_write('threads/', {
+            uid: AppSetupReturns.setCurrentUser.uid,
             title: titleElm.value,
-            detail: detailElm.value,
+            detail: detailElm.value
         })
-        .then((result) => loadButton(buttonElm, buttonElmContent, false))
+        .then((result) => {
+            titleElm.value = '';
+            detailElm.value = '';
+            loadButton(buttonElm, buttonElmContent, false);
+        })
         .catch((error) => {
-            alert(error);
+            alert(new Error('エラーコード' + ':' + error));
             loadButton(buttonElm, buttonElmContent, false);
         });
     }
+}
+
+// メッセージを新規作成
+window.db_store_newMessage = (e, text) => {
+    const textElm = document.getElementById(text);
+    const buttonElm = e.target;
+    const buttonElmContent = buttonElm.innerHTML;
+    const url = new URL(window.location.href);
+    const thread = url.searchParams.get('thread');
+
+    loadButton(buttonElm, buttonElmContent, true);
+    fb.db_write('threads/' + thread + '/chat/', {
+        uid: AppSetupReturns.setCurrentUser.uid,
+        text: textElm.value,
+    })
+    .then((result) => {
+        textElm.value = '';
+        loadButton(buttonElm, buttonElmContent, false);
+    })
+    .catch((error) => {
+        alert(new Error('エラーコード' + ':' + error));
+        loadButton(buttonElm, buttonElmContent, false);
+    });
+}
+
+window.db_open_thread = (listId, viewId) => {
+    document.getElementById(listId).classList.remove('d-none');
+    document.getElementById(viewId).classList.add('d-none');
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete('thread');
+    history.replaceState('', '', '/literacy/');
+}
+
+window.db_open_message = (listId, viewId, selectId) => {
+    document.getElementById(listId).classList.add('d-none');
+    document.getElementById(viewId).classList.remove('d-none');
+
+    const url = new URL(window.location.href);
+    url.searchParams.append('thread', selectId);
+    history.pushState('', '', '?' + url.searchParams);
+
+    fb.db_realtime_messages({
+        path: 'threads/' + selectId + '/chat/',
+        parentID: 'chatContent',
+    });
 }
 
 function loadButton(elm, defaultElm, flag) {
@@ -51,3 +113,5 @@ function loadButton(elm, defaultElm, flag) {
         elm.disabled = false;
     }
 }
+
+// setTimeout(() => fb.db_read('threads/').then((result) => { console.log(result) }), 2000);

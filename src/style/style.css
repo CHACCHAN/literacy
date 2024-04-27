@@ -2,3 +2,13 @@
     font-family: "Zen Kurenaido", sans-serif;
     font-style: normal;
 }
+
+.scale-up {
+    transition: 0.5s;
+}
+.scale-up:hover {
+    background: #3d3d3d;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px white;
+    transition: 0.5s;
+}
