@@ -83,7 +83,7 @@ window.db_open_thread = (listId, viewId) => {
 
     const url = new URL(window.location.href);
     url.searchParams.delete('thread');
-    history.replaceState('', '', '/literacy/');
+    history.replaceState('', '', '/literacy/chat');
 }
 
 window.db_open_message = (listId, viewId, selectId) => {

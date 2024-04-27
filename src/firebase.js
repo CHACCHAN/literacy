@@ -94,8 +94,8 @@ class firebase {
         const parentNode = document.getElementById(options.parentID);
 
         onChildAdded(dbRef, (snapshot) => {
-            var element = document.createElement('div');
-            var content = document.createTextNode('# ' + snapshot.val().title);
+            let element = document.createElement('div');
+            let content = document.createTextNode('# ' + snapshot.val().title);
             element.setAttribute('id', 'threadContent');
             element.setAttribute('onclick', 'db_open_message("chatListView", "chatView", "' + snapshot.key + '")');
             element.classList.add('card', 'card-body', 'text-bg-dark', 'border-light', 'mb-3', 'text-truncate', 'scale-up');
@@ -114,7 +114,7 @@ class firebase {
         this.getUser().then((result) => {
             onChildAdded(dbRef, (snapshot) => {
                 if(snapshot.val().uid === result.uid) {
-                    var myElement = document.createElement('div');
+                    let myElement = document.createElement('div');
 
                     myElement.innerHTML =
                         `
@@ -129,10 +129,10 @@ class firebase {
                             </div>
                         `;
                     
-                    setTimeout(() => parentNode.appendChild(myElement), 100);
+                        parentNode.appendChild(myElement);
                 } else {
                     this.checkUser(snapshot.val(), this.userList).then((result) => {
-                        var publicElement = document.createElement('div');
+                        let publicElement = document.createElement('div');
 
                         publicElement.innerHTML =
                             `
@@ -147,7 +147,7 @@ class firebase {
                                 </div>
                             `;
 
-                        setTimeout(() => parentNode.appendChild(publicElement), 100);
+                        parentNode.appendChild(publicElement);
                     });
                 }
             });
